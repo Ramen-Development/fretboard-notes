@@ -57,29 +57,64 @@ class _MyHomePageState extends State<MyHomePage> {
     'B',
   };
 
+  Widget fretboard() {
+    Set<String> strings = {'G', 'D', 'A', 'E'};
+    return Container(
+      padding: EdgeInsets.all(8),
+      margin: EdgeInsets.all(8),
+      child: Table(
+        border: TableBorder(
+          horizontalInside: BorderSide(color: Colors.white),
+          verticalInside: BorderSide(color: Colors.white),
+        ),
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: [
+          for (String string in strings)
+            TableRow(
+              children: [
+                TableCell(child: Text(string)),
+                for (int fret = 0; fret < 12; fret++)
+                  TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Center(child: Icon(Icons.circle)),
+                    ),
+                  ),
+              ],
+            ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            Wrap(
-              children: [
-                for (String note in notes)
-                  FilledButton.tonal(
-                    onPressed: _incrementCounter,
-                    child: Text(note),
-                  ),
-              ],
-            ),
-          ],
+        child: Container(
+          padding: EdgeInsets.all(8),
+          margin: EdgeInsets.all(8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              fretboard(),
+              Container(
+                padding: EdgeInsets.all(8),
+                margin: EdgeInsets.all(8),
+                child: Wrap(
+                  children: [
+                    for (String note in notes)
+                      FilledButton.tonal(
+                        onPressed: _incrementCounter,
+                        child: Text(note),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
