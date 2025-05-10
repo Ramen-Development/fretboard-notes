@@ -29,14 +29,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   Set<String> notes = {
     'C',
     'C#',
@@ -106,10 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Wrap(
                   children: [
                     for (String note in notes)
-                      FilledButton.tonal(
-                        onPressed: _incrementCounter,
-                        child: Text(note),
-                      ),
+                      FilledButton.tonal(onPressed: (null), child: Text(note)),
                   ],
                 ),
               ),
@@ -118,10 +107,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: (null),
         tooltip: 'Settings',
         child: const Icon(Icons.settings),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
