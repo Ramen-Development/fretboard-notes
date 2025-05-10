@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -48,9 +50,16 @@ class _MyHomePageState extends State<MyHomePage> {
     'Bb',
     'B',
   };
+  Set<String> strings = {'G', 'D', 'A', 'E'};
+  int numOfFrets = 12;
+
+  void reloadFretboard() {
+    setState(() {});
+  }
 
   Widget fretboard() {
-    Set<String> strings = {'G', 'D', 'A', 'E'};
+    int randFret = Random().nextInt(numOfFrets);
+    String randString = strings.elementAt(Random().nextInt(strings.length));
     return Container(
       padding: EdgeInsets.all(8),
       margin: EdgeInsets.all(8),
@@ -65,12 +74,17 @@ class _MyHomePageState extends State<MyHomePage> {
             TableRow(
               children: [
                 TableCell(child: Text(string)),
-                for (int fret = 0; fret < 12; fret++)
+                for (int fret = 0; fret < numOfFrets; fret++)
                   TableCell(
                     verticalAlignment: TableCellVerticalAlignment.middle,
                     child: Padding(
                       padding: const EdgeInsets.all(8),
-                      child: Center(child: Icon(Icons.circle)),
+                      child: Center(
+                        child:
+                            (fret == randFret && string == randString)
+                                ? Icon(Icons.circle)
+                                : (null),
+                      ),
                     ),
                   ),
               ],
@@ -98,7 +112,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Wrap(
                   children: [
                     for (String note in notes)
-                      FilledButton.tonal(onPressed: (null), child: Text(note)),
+                      FilledButton.tonal(
+                        onPressed: reloadFretboard,
+                        child: Text(note),
+                      ),
                   ],
                 ),
               ),
