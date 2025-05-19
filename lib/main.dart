@@ -31,35 +31,49 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Set<String> notes = {
+  List<String> notes = [
     'C',
     'C#',
-    'Db',
+    // 'Db',
     'D',
     'D#',
-    'Eb',
+    // 'Eb',
     'E',
     'F',
     'F#',
-    'Gb',
+    // 'Gb',
     'G',
     'G#',
-    'Ab',
+    // 'Ab',
     'A',
     'A#',
-    'Bb',
+    // 'Bb',
     'B',
-  };
-  Set<String> strings = {'G', 'D', 'A', 'E'};
+  ];
+  List<String> strings = ['G', 'D', 'A', 'E'];
   int numOfFrets = 12;
+  String target = 'C';
 
-  void reloadFretboard() {
-    setState(() {});
+  void setTarget(String randString, int randFret) {
+    int stringIndex = notes.indexOf(randString) + 1;
+    int targetIndex = stringIndex + randFret;
+    int notesLength = notes.length;
+    if (targetIndex > notesLength) {
+      targetIndex = targetIndex - notesLength;
+    }
+    target = notes.elementAt(targetIndex);
+  }
+
+  void guessNote(String note) {
+    if (note == target) {
+      setState(() {});
+    }
   }
 
   Widget fretboard() {
     int randFret = Random().nextInt(numOfFrets);
     String randString = strings.elementAt(Random().nextInt(strings.length));
+    setTarget(randString, randFret);
     return Container(
       padding: EdgeInsets.all(8),
       margin: EdgeInsets.all(8),
@@ -113,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     for (String note in notes)
                       FilledButton.tonal(
-                        onPressed: reloadFretboard,
+                        onPressed: () => guessNote(note),
                         child: Text(note),
                       ),
                   ],
