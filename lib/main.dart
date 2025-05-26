@@ -7,7 +7,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  
   @override
   Widget build(BuildContext context) {
     const String title = 'Ramen fretboard notes';
@@ -29,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Set<String> notes = {
+  const Set<String> notes = {
     'C',
     'C#',
     'Db',
@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   };
 
   Widget fretboard() {
-    Set<String> strings = {'G', 'D', 'A', 'E'};
+    const Set<String> strings = {'G', 'D', 'A', 'E'};
     return Container(
       padding: EdgeInsets.all(8),
       margin: EdgeInsets.all(8),
