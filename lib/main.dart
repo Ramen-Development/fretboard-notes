@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fretboard_notes/views/main_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -6,7 +7,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   
   @override
   Widget build(BuildContext context) {
@@ -15,102 +15,7 @@ class MyApp extends StatelessWidget {
       title: title,
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.dark,
-      home: const MyHomePage(title: title),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  const Set<String> notes = {
-    'C',
-    'C#',
-    'Db',
-    'D',
-    'D#',
-    'Eb',
-    'E',
-    'F',
-    'F#',
-    'Gb',
-    'G',
-    'G#',
-    'Ab',
-    'A',
-    'A#',
-    'Bb',
-    'B',
-  };
-
-  Widget fretboard() {
-    const Set<String> strings = {'G', 'D', 'A', 'E'};
-    return Container(
-      padding: EdgeInsets.all(8),
-      margin: EdgeInsets.all(8),
-      child: Table(
-        border: TableBorder(
-          horizontalInside: BorderSide(color: Colors.white),
-          verticalInside: BorderSide(color: Colors.white),
-        ),
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        children: [
-          for (String string in strings)
-            TableRow(
-              children: [
-                TableCell(child: Text(string)),
-                for (int fret = 0; fret < 12; fret++)
-                  TableCell(
-                    verticalAlignment: TableCellVerticalAlignment.middle,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Center(child: Icon(Icons.circle)),
-                    ),
-                  ),
-              ],
-            ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.all(8),
-          margin: EdgeInsets.all(8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              fretboard(),
-              Container(
-                padding: EdgeInsets.all(8),
-                margin: EdgeInsets.all(8),
-                child: Wrap(
-                  children: [
-                    for (String note in notes)
-                      FilledButton.tonal(onPressed: (null), child: Text(note)),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (null),
-        tooltip: 'Settings',
-        child: const Icon(Icons.settings),
-      ),
+      home: const MainView(title: title),
     );
   }
 }
