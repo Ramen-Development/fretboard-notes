@@ -16,5 +16,6 @@ int setRandFret() {
 }
 
 String setRandString() {
+  List<String> strings = instrument.tuning.notes;
   return strings.elementAt(Random().nextInt(strings.length));
 }

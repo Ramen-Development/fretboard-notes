@@ -4,9 +4,8 @@ import 'package:fretboard_notes/model/predefined_tunings.dart';
 import 'package:fretboard_notes/model/tuning.dart';
 import 'package:fretboard_notes/model/global/fretboard_config.dart';
 
+final config = GlobalFretboardConfig();
 Container showConfigPanel(BuildContext context) {
-  final config = GlobalFretboardConfig();
-
   InstrumentType? selectedInstrument = config.selectedInstrument;
   int? selectedStringCount = config.selectedStringCount;
   Tuning? selectedTuning = config.selectedTuning;
@@ -19,7 +18,8 @@ Container showConfigPanel(BuildContext context) {
       builder: (BuildContext context, setState) {
         List<int> getAvailableStringCounts(InstrumentType type) {
           final tunings = predefinedTunings[type] ?? [];
-          final uniqueCounts = tunings.map((t) => t.totalStrings).toSet().toList();
+          final uniqueCounts =
+              tunings.map((t) => t.totalStrings).toSet().toList();
           uniqueCounts.sort();
           return uniqueCounts;
         }
@@ -42,10 +42,7 @@ Container showConfigPanel(BuildContext context) {
               ),
               Expanded(
                 flex: 4,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: dropdown,
-                ),
+                child: Align(alignment: Alignment.centerRight, child: dropdown),
               ),
             ],
           );
@@ -71,12 +68,13 @@ Container showConfigPanel(BuildContext context) {
                       config.selectedTuning = null;
                     });
                   },
-                  dropdownMenuEntries: InstrumentType.values.map((type) {
-                    return DropdownMenuEntry(
-                      value: type,
-                      label: type.label,
-                    );
-                  }).toList(),
+                  dropdownMenuEntries:
+                      InstrumentType.values.map((type) {
+                        return DropdownMenuEntry(
+                          value: type,
+                          label: type.label,
+                        );
+                      }).toList(),
                 ),
               ),
             ),
@@ -95,14 +93,17 @@ Container showConfigPanel(BuildContext context) {
                       config.selectedTuning = null;
                     });
                   },
-                  dropdownMenuEntries: selectedInstrument == null
-                      ? []
-                      : getAvailableStringCounts(selectedInstrument!).map((count) {
-                          return DropdownMenuEntry(
-                            value: count,
-                            label: count.toString(),
-                          );
-                        }).toList(),
+                  dropdownMenuEntries:
+                      selectedInstrument == null
+                          ? []
+                          : getAvailableStringCounts(selectedInstrument!).map((
+                            count,
+                          ) {
+                            return DropdownMenuEntry(
+                              value: count,
+                              label: count.toString(),
+                            );
+                          }).toList(),
                 ),
               ),
             ),
@@ -111,7 +112,8 @@ Container showConfigPanel(BuildContext context) {
               DropdownMenuTheme(
                 data: const DropdownMenuThemeData(),
                 child: DropdownMenu<Tuning>(
-                  enabled: selectedInstrument != null && selectedStringCount != null,
+                  enabled:
+                      selectedInstrument != null && selectedStringCount != null,
                   initialSelection: selectedTuning,
                   onSelected: (value) {
                     setState(() {
@@ -119,16 +121,25 @@ Container showConfigPanel(BuildContext context) {
                       config.selectedTuning = value;
                     });
                   },
-                  dropdownMenuEntries: (selectedInstrument != null && selectedStringCount != null)
-                      ? getAvailableTunings(selectedInstrument!, selectedStringCount!).map((tuning) {
-                          return DropdownMenuEntry(
-                            value: tuning,
-                            label: tuning.name,
-                          );
-                        }).toList()
-                      : [],
+                  dropdownMenuEntries:
+                      (selectedInstrument != null &&
+                              selectedStringCount != null)
+                          ? getAvailableTunings(
+                            selectedInstrument!,
+                            selectedStringCount!,
+                          ).map((tuning) {
+                            return DropdownMenuEntry(
+                              value: tuning,
+                              label: tuning.name,
+                            );
+                          }).toList()
+                          : [],
                 ),
               ),
+            ),
+            TextButton(
+              onPressed: () => config.setConfig(),
+              child: Text('Set Configuration'),
             ),
           ],
         );

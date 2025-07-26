@@ -13,15 +13,13 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  void guessNote(String note) {
-    if (note == target) {
-      setState(() {});
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    bool _configOpen = false;
+    config.addListener(() {
+      setState(() {});
+    });
+    bool configOpen = false;
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       key: _scaffoldKey,
@@ -40,7 +38,7 @@ class _MainViewState extends State<MainView> {
                   children: [
                     for (String note in notes)
                       FilledButton.tonal(
-                        onPressed: () => guessNote(note),
+                        onPressed: () => config.guessNote(note, target),
                         child: Text(note),
                       ),
                   ],
@@ -52,14 +50,14 @@ class _MainViewState extends State<MainView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (!_configOpen) {
+          if (!configOpen) {
             _scaffoldKey.currentState?.showBottomSheet((BuildContext context) {
               return showConfigPanel(context);
             });
           } else {
             closeConfigPanel(context);
           }
-          _configOpen = !_configOpen;
+          configOpen = !configOpen;
         },
         tooltip: 'Settings',
         child: const Icon(Icons.settings),
