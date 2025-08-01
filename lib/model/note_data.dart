@@ -1,3 +1,7 @@
+import 'package:fretboard_notes/model/predefined_tunings.dart';
+
+import 'instrument.dart';
+
 List<String> notes = [
   'C',
   'C#',
@@ -17,6 +21,9 @@ List<String> notes = [
   // 'Bb',
   'B',
 ];
-List<String> strings = ['G', 'D', 'A', 'E'];
+Instrument instrument = Instrument(
+  type: InstrumentType.guitar,
+  tuning: predefinedTunings[InstrumentType.guitar]!.first,
+);
 
 int numOfFrets = 12;

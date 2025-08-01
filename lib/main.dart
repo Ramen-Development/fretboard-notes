@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:fretboard_notes/model/global/fretboard_config.dart';
 import 'package:fretboard_notes/views/main_view.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => GlobalFretboardConfig(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     const String title = 'Ramen fretboard notes';

@@ -17,7 +17,7 @@ Widget fretboard() {
       ),
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
-        for (String string in strings)
+        for (String string in instrument.tuning.notes)
           TableRow(
             children: [
               TableCell(child: Text(string)),
