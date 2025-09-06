@@ -4,9 +4,9 @@ import 'package:fretboard_notes/model/note_data.dart';
 
 String target = 'C';
 Widget fretboard() {
-  int randFret = setRandFret();
-  String randString = setRandString();
-  target = setTarget(randString, randFret);
+  int randFret = getRandFret();
+  final randString = getRandString();
+  target = getTarget(randString.value, randFret);
   return Container(
     padding: EdgeInsets.all(8),
     margin: EdgeInsets.all(8),
@@ -17,25 +17,24 @@ Widget fretboard() {
       ),
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
-        for (String string in instrument.tuning.notes)
-          TableRow(
-            children: [
-              TableCell(child: Text(string)),
-              for (int fret = 0; fret < numOfFrets; fret++)
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Center(
-                      child:
-                          (fret == randFret && string == randString)
-                              ? Icon(Icons.circle)
-                              : (null),
-                    ),
+        for (final entry in instrument.tuning.notesMap.entries)
+        TableRow(
+          children: [
+            TableCell(child: Text(entry.value)), // note string
+            for (int fret = 0; fret < numOfFrets; fret++)
+              TableCell(
+                verticalAlignment: TableCellVerticalAlignment.middle,
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Center(
+                    child: (fret == randFret && entry.key == randString.key)
+                        ? Icon(Icons.circle)
+                        : null,
                   ),
                 ),
-            ],
-          ),
+              ),
+          ],
+        ),
       ],
     ),
   );

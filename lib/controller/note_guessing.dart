@@ -1,7 +1,7 @@
 import 'package:fretboard_notes/model/note_data.dart';
 import 'dart:math';
 
-String setTarget(String randString, int randFret) {
+String getTarget(String randString, int randFret) {
   int stringIndex = notes.indexOf(randString) + 1;
   int targetIndex = stringIndex + randFret;
   int notesLength = notes.length;
@@ -11,11 +11,13 @@ String setTarget(String randString, int randFret) {
   return notes.elementAt(targetIndex);
 }
 
-int setRandFret() {
+int getRandFret() {
   return Random().nextInt(numOfFrets);
 }
 
-String setRandString() {
-  List<String> strings = instrument.tuning.notes;
-  return strings.elementAt(Random().nextInt(strings.length));
+
+MapEntry<int, String> getRandString() {
+  final notesMap = instrument.tuning.notesMap;
+  final randomIndex = Random().nextInt(notesMap.length);
+  return notesMap.entries.elementAt(randomIndex);
 }
